@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/riza/linx/internal/banner"
 	"github.com/riza/linx/internal/options"
-	"github.com/riza/linx/linx"
+	"github.com/riza/linx/internal/scanner"
 	"github.com/riza/linx/pkg/logger"
 )
 
@@ -17,7 +17,8 @@ func main() {
 		logger.Get().Fatal(err)
 	}
 
-	err = linx.Run(opts)
+	scanner := scanner.NewScanner(opts.Target)
+	err = scanner.Run()
 	if err != nil {
 		logger.Get().Error(err)
 	}
