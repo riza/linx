@@ -7,7 +7,7 @@ import (
 	"github.com/riza/linx/pkg/logger"
 )
 
-const Version = "v1.0"
+const Version = "v0.0.1"
 
 func main() {
 	banner.Show(Version)
