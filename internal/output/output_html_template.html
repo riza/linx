@@ -9,40 +9,35 @@
 </head>
 <body>
 
-<div class="col-lg-8 mx-auto p-3 py-md-5">
-    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
-        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-            <span class="fs-4">{{ .Target }}</span>
-        </a>
-    </header>
+<div class="container">
+    <div class="mb-5 pb-3 fs-4 border-bottom">
+        {{ .Target }}
+    </div>
 
-    <main>
-        <div class="row g-12">
-            <div class="col-md-12">
-                <table style="table-layout: fixed" class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th scope="col">URL</th>
-                        <th scope="col">Location in file</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{range .Results}}
-                    <tr>
-                        <td>{{ .URL }}</td>
-                        <td>
-                            <pre><code>{{ .Location }}</code></pre>
-                        </td>
-                    </tr>
-                    {{end}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-    <footer class="pt-5 my-5 text-muted border-top">
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">URL</th>
+                <th scope="col">Location in file</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .Results}}
+            <tr>
+                <td>{{ .URL }}</td>
+                <td>
+                    <pre><code>{{ .Location }}</code></pre>
+                </td>
+            </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-5 pt-3 text-muted border-top">
         created with <a href="https://github.com/riza/linx">linx</a>
-    </footer>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
