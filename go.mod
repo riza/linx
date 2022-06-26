@@ -1,4 +1,4 @@
-module linx
+module github.com/riza/linx
 
 go 1.17
 
