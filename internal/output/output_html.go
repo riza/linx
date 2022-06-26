@@ -58,10 +58,8 @@ const htmlTemplate = `<!doctype html>
 type OutputHTML struct {
 }
 
-func (oh OutputHTML) RenderAndSave(data OutputData) error {
-	fileName := data.Filename + htmlExtension
-
-	f, err := os.Create(fileName)
+func (oh OutputHTML) RenderAndSave(data *OutputData) error {
+	f, err := os.Create(data.Filename)
 	if err != nil {
 		return err
 	}
@@ -77,6 +75,6 @@ func (oh OutputHTML) RenderAndSave(data OutputData) error {
 		return err
 	}
 
-	logger.Get().Infof("results saved: %s", fileName)
+	logger.Get().Infof("results saved: %s", data.Filename)
 	return nil
 }

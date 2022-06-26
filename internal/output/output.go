@@ -1,7 +1,7 @@
 package output
 
 type Output interface {
-	RenderAndSave(data OutputData) error
+	RenderAndSave(data *OutputData) error
 }
 
 type OutputData struct {

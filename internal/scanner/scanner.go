@@ -57,19 +57,23 @@ func (s scanner) Run() error {
 		return fmt.Errorf(errGetFileContent, err)
 	}
 
-	out := output.OutputData{
+	out := &output.OutputData{
 		Target:   s.task.target,
-		Filename: strategy.GetFileName(),
+		Filename: s.task.output,
 		Results:  []output.Result{},
 	}
 
-	for _, s := range r.FindAllStringSubmatchIndex(*(*string)(unsafe.Pointer(&content)), -1) {
-		url := content[s[0]:s[1]]
+	for _, f := range r.FindAllStringSubmatchIndex(*(*string)(unsafe.Pointer(&content)), -1) {
+		url := content[f[0]:f[1]]
 		if rFt.MatchString(string(url)) || rMt.MatchString(string(url)) {
 			continue
 		}
 
-		closeLines := content[s[0]-100 : s[1]+100]
+		if s.isAlreadyExists(string(url), out) {
+			continue
+		}
+
+		closeLines := content[f[0]-100 : f[1]+100]
 		out.Results = append(out.Results, output.Result{
 			URL:      string(url),
 			Location: string(closeLines),
@@ -94,6 +98,15 @@ func (s scanner) Run() error {
 
 func (s scanner) getOutputEngineKey() string {
 	return filepath.Ext(s.task.output)
+}
+
+func (s scanner) isAlreadyExists(url string, out *output.OutputData) bool {
+	for _, a := range out.Results {
+		if a.URL == url {
+			return true
+		}
+	}
+	return false
 }
 
 func defineStrategyForTarget(target string) strategies.ScanStrategy {
