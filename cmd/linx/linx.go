@@ -7,7 +7,7 @@ import (
 	"github.com/riza/linx/pkg/logger"
 )
 
-const Version = "v0.0.2"
+const Version = "v0.0.4"
 
 func main() {
 	banner.Show(Version)
@@ -17,7 +17,7 @@ func main() {
 		logger.Get().Fatal(err)
 	}
 
-	scanner := scanner.NewScanner(opts.Target)
+	scanner := scanner.NewScanner(opts)
 	err = scanner.Run()
 	if err != nil {
 		logger.Get().Error(err)

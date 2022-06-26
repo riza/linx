@@ -1,12 +1,13 @@
 package output
 
 import (
+	"github.com/riza/linx/pkg/logger"
 	"html/template"
 	"os"
 )
 
-const templateFile = "./internal/output/output_html_template.html"
-const templateRaw = `<!doctype html>
+const htmlExtension = ".html"
+const htmlTemplate = `<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -17,13 +18,13 @@ const templateRaw = `<!doctype html>
 </head>
 <body>
 
-<div class="container">
+<div style="margin-top: 2%;margin-bottom: 5%;" class="container">
     <div class="mb-5 pb-3 fs-4 border-bottom">
         {{ .Target }}
     </div>
 
     <div class="table-responsive">
-        <table class="table table-striped table-hover">
+        <table style="table-layout: fixed" class="table table-striped table-hover">
             <thead>
             <tr>
                 <th scope="col">URL</th>
@@ -55,29 +56,27 @@ const templateRaw = `<!doctype html>
 </html>`
 
 type OutputHTML struct {
-	output OutputData
 }
 
-func NewOutputHTML(output OutputData) OutputHTML {
-	return OutputHTML{output: output}
-}
+func (oh OutputHTML) RenderAndSave(data OutputData) error {
+	fileName := data.Filename + htmlExtension
 
-func (oh OutputHTML) RenderAndSave() error {
-	f, err := os.Create(oh.output.Filename)
+	f, err := os.Create(fileName)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	t, err := template.New("output").Parse(templateRaw)
+	t, err := template.New("output").Parse(htmlTemplate)
 	if err != nil {
 		return err
 	}
 
-	err = t.Execute(f, oh.output)
+	err = t.Execute(f, data)
 	if err != nil {
 		return err
 	}
 
+	logger.Get().Infof("results saved: %s", fileName)
 	return nil
 }

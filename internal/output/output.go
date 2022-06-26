@@ -1,5 +1,9 @@
 package output
 
+type Output interface {
+	RenderAndSave(data OutputData) error
+}
+
 type OutputData struct {
 	Target   string
 	Filename string

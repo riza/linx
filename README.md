@@ -26,14 +26,14 @@ go install -v github.com/riza/linx/cmd/linx@latest
 # Usage
 
 ```sh
-linx --target=https://rizasabuncu.com/assets/admin_acces.js
+linx --target=https://rizasabuncu.com/assets/admin_acces.js --output=admin_access_result.html
 ```
 
 # TODOs
 
-* [x] HTML output support 
+* [x] HTML output support
 * [ ] JSON output support
 * [ ] Custom cookie support
-* [ ] Rule improvement & blacklist support
+* [x] Rule improvement & blacklist support
 * [ ] Support parallel scan multiple files
 * [ ] ...

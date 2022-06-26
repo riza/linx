@@ -10,6 +10,7 @@ import (
 
 type Options struct {
 	Target string
+	Output string
 	Debug  bool
 }
 
@@ -28,6 +29,7 @@ func Get() *Options {
 func (o *Options) Parse() (*Options, error) {
 	flag.StringVar(&o.Target, "target", "", "can be *.js file path or url")
 	flag.BoolVar(&o.Debug, "debug", false, "do you want to know what's inside the engine?")
+	flag.StringVar(&o.Output, "output", "", "output file name (currently support html)")
 	flag.Parse()
 
 	if o.Debug {
