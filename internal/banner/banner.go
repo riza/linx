@@ -1,6 +1,6 @@
 package banner
 
-import "linx/pkg/logger"
+import "github.com/riza/linx/pkg/logger"
 
 const banner = `
    ___         

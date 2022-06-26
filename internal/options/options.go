@@ -3,7 +3,7 @@ package options
 import (
 	"flag"
 	"fmt"
-	"linx/pkg/logger"
+	"github.com/riza/linx/pkg/logger"
 	"os"
 	"strings"
 )

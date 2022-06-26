@@ -2,8 +2,8 @@ package scanner
 
 import (
 	"fmt"
-	"linx/internal/scanner/strategies"
-	"linx/pkg/logger"
+	"github.com/riza/linx/internal/scanner/strategies"
+	"github.com/riza/linx/pkg/logger"
 	"regexp"
 	"strings"
 	"unsafe"

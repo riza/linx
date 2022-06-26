@@ -1,10 +1,10 @@
 package main
 
 import (
-	"linx/internal/banner"
-	"linx/internal/options"
-	"linx/linx"
-	"linx/pkg/logger"
+	"github.com/riza/linx/internal/banner"
+	"github.com/riza/linx/internal/options"
+	"github.com/riza/linx/linx"
+	"github.com/riza/linx/pkg/logger"
 )
 
 const Version = "v1.0"

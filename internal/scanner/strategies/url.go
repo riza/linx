@@ -2,8 +2,8 @@ package strategies
 
 import (
 	"fmt"
+	"github.com/riza/linx/pkg/logger"
 	"io/ioutil"
-	"linx/pkg/logger"
 	"net/http"
 )
 

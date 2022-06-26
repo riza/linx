@@ -1,8 +1,8 @@
 package strategies
 
 import (
+	"github.com/riza/linx/pkg/logger"
 	"io/ioutil"
-	"linx/pkg/logger"
 	"os"
 )
 
