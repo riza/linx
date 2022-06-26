@@ -7,7 +7,7 @@
   <a href="https://goreportcard.com/badge/github.com/riza/linx">  
     <img src="https://goreportcard.com/badge/github.com/riza/linx">  
   </a>  
-  <a href="https://github.com/projectdiscovery/httpx/releases">  
+  <a href="https://github.com/riza/linx/releases">  
     <img src="https://img.shields.io/github/release/riza/linx">  
   </a>  
   <a href="https://twitter.com/rizasabuncu">  
