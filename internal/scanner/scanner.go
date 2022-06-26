@@ -2,9 +2,12 @@ package scanner
 
 import (
 	"fmt"
+	"github.com/riza/linx/internal/output"
 	"github.com/riza/linx/internal/scanner/strategies"
 	"github.com/riza/linx/pkg/logger"
+	"os/exec"
 	"regexp"
+	"runtime"
 	"strings"
 	"unsafe"
 )
@@ -24,6 +27,7 @@ type scanner struct {
 func NewScanner(target string) scanner {
 	return scanner{
 		task{
+			target:   target,
 			strategy: defineStrategyForTarget(target),
 		},
 	}
@@ -32,17 +36,42 @@ func NewScanner(target string) scanner {
 func (s scanner) Run() error {
 	r, _ := regexp.Compile(rule)
 
-	content, err := s.task.strategy.GetContent()
+	strategy := s.task.strategy
+	content, err := strategy.GetContent()
 	if err != nil {
 		return fmt.Errorf(errGetFileContent, err)
 	}
 
-	urls := r.FindAllString(*(*string)(unsafe.Pointer(&content)), -1)
-	for _, s := range urls {
-		logger.Get().Infof("found possible url: %s", s)
+	out := output.OutputData{
+		Target:   s.task.target,
+		Filename: strategy.GetFileName() + "_result.html",
+		Results:  []output.Result{},
 	}
 
-	logger.Get().Infof("%d possible url found", len(urls))
+	for _, s := range r.FindAllStringSubmatchIndex(*(*string)(unsafe.Pointer(&content)), -1) {
+		url := content[s[0]:s[1]]
+		closeLines := content[s[0]-100 : s[1]+100]
+
+		out.Results = append(out.Results, output.Result{
+			URL:      string(url),
+			Location: string(closeLines),
+		})
+
+		logger.Get().Infof("found possible url: %s", string(url))
+	}
+
+	logger.Get().Infof("%d possible url found", len(out.Results))
+
+	err = output.NewOutputHTML(out).RenderAndSave()
+	if err != nil {
+		return fmt.Errorf(errOutputFailed, err)
+	}
+
+	err = openResults(out.Filename)
+	if err != nil {
+		return fmt.Errorf(errOutputOpenFailed, err)
+	}
+
 	return nil
 }
 
@@ -51,4 +80,23 @@ func defineStrategyForTarget(target string) strategies.ScanStrategy {
 		return strategies.URLStrategy{target}
 	}
 	return strategies.FileStrategy{target}
+}
+
+func openResults(fileName string) error {
+	var err error
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", fileName).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", fileName).Start()
+	case "darwin":
+		err = exec.Command("open", fileName).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

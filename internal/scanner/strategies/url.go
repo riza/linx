@@ -5,6 +5,7 @@ import (
 	"github.com/riza/linx/pkg/logger"
 	"io/ioutil"
 	"net/http"
+	"path"
 )
 
 type URLStrategy struct {
@@ -14,6 +15,11 @@ type URLStrategy struct {
 func (us URLStrategy) GetContent() ([]byte, error) {
 	logger.Get().Debugf("selected url strategy target=%s", us.Target)
 	return us.getFileContent()
+}
+
+func (us URLStrategy) GetFileName() string {
+	_, file := path.Split(us.Target)
+	return file
 }
 
 func (us URLStrategy) getFileContent() ([]byte, error) {

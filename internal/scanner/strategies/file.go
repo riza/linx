@@ -15,6 +15,10 @@ func (fs FileStrategy) GetContent() ([]byte, error) {
 	return fs.readFileContent()
 }
 
+func (fs FileStrategy) GetFileName() string {
+	return fs.Target
+}
+
 func (fs FileStrategy) readFileContent() ([]byte, error) {
 	_, err := os.Stat(fs.Target)
 	if err != nil {

@@ -31,6 +31,9 @@ linx --target=https://rizasabuncu.com/assets/admin_acces.js
 
 # TODOs
 
-* [ ] HTML Output  
+* [x] HTML output support 
+* [ ] JSON output support
+* [ ] Custom cookie support
+* [ ] Rule improvement & blacklist support
 * [ ] Support parallel scan multiple files
 * [ ] ...

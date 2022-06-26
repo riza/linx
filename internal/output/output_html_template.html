@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ .Target }} - linx report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+    <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+            <span class="fs-4">{{ .Target }}</span>
+        </a>
+    </header>
+
+    <main>
+        <div class="row g-12">
+            <div class="col-md-12">
+                <table style="table-layout: fixed" class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">URL</th>
+                        <th scope="col">Location in file</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range .Results}}
+                    <tr>
+                        <td>{{ .URL }}</td>
+                        <td>
+                            <pre><code>{{ .Location }}</code></pre>
+                        </td>
+                    </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <footer class="pt-5 my-5 text-muted border-top">
+        created with <a href="https://github.com/riza/linx">linx</a>
+    </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+</body>
+</html>
