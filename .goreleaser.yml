@@ -24,7 +24,7 @@ builds:
         goarch: 'arm64'
 
     binary: '{{ .ProjectName }}'
-    main: cmd/linx.go
+    main: cmd/linx/linx.go
 
 archives:
   - format: zip
