@@ -1,7 +1,3 @@
-before:
-  hooks:
-    - go mod tidy
-
 builds:
   - env:
       - CGO_ENABLED=0
@@ -28,8 +24,6 @@ builds:
 
 archives:
   - format: zip
-    replacements:
-      darwin: macOS
 
 checksum:
   algorithm: sha256
