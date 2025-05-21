@@ -2,10 +2,11 @@ package strategies
 
 import (
 	"fmt"
-	"github.com/riza/linx/pkg/logger"
 	"io/ioutil"
 	"net/http"
 	"path"
+
+	"github.com/riza/linx/pkg/logger"
 )
 
 type URLStrategy struct {
@@ -24,10 +25,21 @@ func (us URLStrategy) GetFileName() string {
 
 func (us URLStrategy) getFileContent() ([]byte, error) {
 	logger.Get().Debugf("getting file from %s", us.Target)
-	resp, err := http.Get(us.Target)
+
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", us.Target, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	// Set default headers
+	req.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
 
 	logger.Get().Debugf("response: status code=%d", resp.StatusCode)
 	if !(resp.StatusCode >= 200 && resp.StatusCode <= 299) {

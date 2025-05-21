@@ -26,14 +26,18 @@ go install -v github.com/riza/linx/cmd/linx@latest
 # Usage
 
 ```sh
-linx --target=https://rizasabuncu.com/assets/admin_acces.js --output=admin_access_result.html
+# Scan a single JavaScript file and output results in HTML format
+linx https://rizasabuncu.com/assets/admin_acces.js --output=admin_access_result.html
+
+# Scan a single JavaScript file and output results in JSON format
+linx https://rizasabuncu.com/assets/admin_acces.js --output=admin_access_result.json
+
+# Scan multiple JavaScript files
+linx https://example.com/js/file1.js,https://example.com/js/file2.js --output=results.html
+
+# Scan multiple JavaScript files in parallel
+linx https://example.com/js/file1.js,https://example.com/js/file2.js --output=results.html --parallel
+
+# Show debug information
+linx https://example.com/js/file1.js --output=results.html --debug
 ```
-
-# TODOs
-
-* [x] HTML output support
-* [ ] JSON output support
-* [ ] Custom cookie support
-* [x] Rule improvement & blacklist support
-* [ ] Support parallel scan multiple files
-* [ ] ...
